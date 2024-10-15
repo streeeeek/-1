@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Admin\\Documents\\GitHub\\-1\\\u041B\u0430\u0431 1\\",
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Documents\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430\\-1\\\u041B\u0430\u0431 1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A9A61A09-8869-4F1E-A717-F5DDD808DC55}|\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.vcxproj|C:\\Users\\Admin\\Documents\\GitHub\\-1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A9A61A09-8869-4F1E-A717-F5DDD808DC55}|\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.vcxproj|solutionrelative:\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Documents\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430\\-1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1 \u043D\u043D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1 \u043D\u043D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +19,13 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "\u041B\u0430\u0431 1.cpp",
-              "DocumentMoniker": "C:\\Users\\Admin\\Documents\\GitHub\\-1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.cpp",
-              "RelativeDocumentMoniker": "\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.cpp",
-              "ToolTip": "C:\\Users\\Admin\\Documents\\GitHub\\-1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.cpp",
-              "RelativeToolTip": "\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1.cpp",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAAAEAAAAPAAAAAAAAAA==",
+              "Title": "\u041B\u0430\u0431 1 \u043D\u043D.cpp",
+              "DocumentMoniker": "C:\\Users\\Admin\\Documents\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430\\-1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1 \u043D\u043D.cpp",
+              "RelativeDocumentMoniker": "\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1 \u043D\u043D.cpp",
+              "ToolTip": "C:\\Users\\Admin\\Documents\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430\\-1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1 \u043D\u043D.cpp",
+              "RelativeToolTip": "\u041B\u0430\u0431 1\\\u041B\u0430\u0431 1 \u043D\u043D.cpp",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-09-25T21:10:09.603Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-25T21:10:09.603Z"
             }
           ]
         }

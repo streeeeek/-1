@@ -1,4 +1,4 @@
-﻿#include <iostream> // переделанный
+﻿#include <iostream> // переделанный н
 using namespace std;
 int main(int argc, char* argv[])
 {
@@ -18,14 +18,14 @@ int main(int argc, char* argv[])
 	{
 		if (isHuman)
 		{
-			wcout << L"Введите координаты точки: \n";
+			wcout << L"Введите координаты точки:" << endl;
 		}
 		cin >> x >> y;
 		if (!cin)
 		{
 			if (isHuman)
 			{
-				wcout << L"Ошибка. \n";
+				wcout << L"Ошибка." << endl;
 			}
 			break;
 		}
@@ -39,11 +39,11 @@ int main(int argc, char* argv[])
 			{
 				if (isHuman)
 				{
-					wcout << L"Точка входит в треугольник. \n";
+					wcout << L"Точка входит в треугольник." << endl;
 				}
 				else
 				{
-					cout << "YES \n";
+					cout << "YES" << endl;
 				}
 			}
 			else
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 				}
 				else
 				{
-					cout << "NO \n";
+					cout << "NO" << endl;
 				}
 			}
 		}
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				cout << "NO \n";
+				cout << "NO" << endl;
 			}
 		}
 	} while (x != 0 or y != 0);
