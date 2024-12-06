@@ -34,8 +34,8 @@ int main(int argc, char* argv[])
 	int count_of_5 = 0;
 	int prev1 = 0, prev2 = 0;
 	int number;
-	int max_num = 0;
-	int min_num = 0;
+	int max_num = INT_MIN;
+	int min_num = INT_MAX;
 	int dif = 0;
 	for (int i = 0; i < n; i++) {
 		if (isHuman) {
