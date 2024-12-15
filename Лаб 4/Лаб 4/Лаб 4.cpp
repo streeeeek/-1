@@ -1,151 +1,177 @@
 ﻿#include <iostream>
-
+#include <cstring>
+#include <limits> 
 using namespace std;
 
-void inputMatrix(double** matrix, int rows, int cols) {
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            cin >> matrix[i][j];
-
+void MulMat(double** Mat1, double** Mat2, double** result, int N, int M, int K) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < K; j++) {
+            result[i][j] = 0.0;
+            for (int k = 0; k < M; k++) {
+                result[i][j] += Mat1[i][k] * Mat2[k][j];
+            }
         }
     }
 }
 
-void printMatrix(double** matrix, int rows, int cols) {
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            cout << matrix[i][j] << (j < cols - 1 ? " " : "");
+void powMat(double** Mat, double** result, int x, int N) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (i == j) {
+                result[i][j] = 1.0;
+            }
+            else {
+                result[i][j] = 0.0;
+            }
+        }
+    }
+
+    for (int p = 0; p < x; p++) {
+        double** temp = new double* [N];
+        for (int i = 0; i < N; i++)
+            temp[i] = new double[N]();
+
+        MulMat(result, Mat, temp, N, N, N);
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                result[i][j] = temp[i][j];
+
+        for (int i = 0; i < N; i++)
+            delete[] temp[i];
+        delete[] temp;
+    }
+}
+
+void prtMat(double** matrix, int N, int M) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            cout << matrix[i][j];
+            if (j != M - 1) {
+                cout << " ";
+            }
         }
         cout << endl;
     }
 }
 
-bool multiplyMatrices(double** A, int A_rows, int A_cols,
-    double** B, int B_rows, int B_cols,
-    double**& result, int& result_rows, int& result_cols) {
-    if (A_cols != B_rows) {
-        return false;
-    }
-    result = new double* [A_rows];
-    for (int i = 0; i < A_rows; ++i) {
-        result[i] = new double[B_cols];
-        for (int j = 0; j < B_cols; ++j) {
-            result[i][j] = 0;
-            for (int k = 0; k < A_cols; ++k) {
-                result[i][j] += A[i][k] * B[k][j];
-            }
+void inputMatrix(double** matrix, int N, int M) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            cin >> matrix[i][j];
         }
     }
-    result_rows = A_rows;
-    result_cols = B_cols;
-    return true;
 }
 
-bool powerMatrix(double** A, int N, int exp, double**& result) {
-    if (N <= 0 || exp < 1) {
-        return false;
-    }
-    result = new double* [N];
-    for (int i = 0; i < N; ++i) {
-        result[i] = new double[N];
-    }
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            result[i][j] = A[i][j];
+int readPositiveInteger() {
+    int value;
+    while (true) {
+        cin >> value;
+        if (cin.fail() || value <= 0) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cout << "Ошибка: введите положительное целое число." << endl;
+        }
+        else {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            return value;
         }
     }
+}
 
-    double** temp;
-    for (int i = 1; i < exp; ++i) {
-        if (!multiplyMatrices(result, N, N, A, N, N, temp, N, N)) {
-            return false;
+void readMatrixDimensions(int& N, int& M) {
+    while (true) {
+        cout << "введите кол-во строк и столбцов Матрицы 1:" << endl;
+        cin >> N >> M;
+        if (cin.fail() || N <= 0 || M <= 0) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cout << "Ошибка: введите два положительных целых числа." << endl;
         }
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N; ++j) {
-                result[i][j] = temp[i][j];
-            }
+        else {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            break; 
         }
-        for (int k = 0; k < N; ++k) {
-            delete[] temp[k];
-        }
-        delete[] temp;
     }
-    return true;
+}
+
+int readMatrixColumns() {
+    int columns;
+    while (true) {
+        cout << "введите кол-во столбцов матрицы A2:" << endl;
+        columns = readPositiveInteger(); 
+        return columns; 
+    }
 }
 
 int main(int argc, char* argv[]) {
-
-    setlocale(LC_ALL, "Russian");
-
     bool isHuman = false;
     if (argc <= 1 || strcmp(argv[1], "false") != 0) {
         isHuman = true;
     }
 
+    setlocale(LC_ALL, "RU");
     int N, M;
 
-    if (isHuman) {
-        cout << "Введите элементы матрицы A1 (N строк, M чисел в каждой): " << endl;
-    }
-    cin >> N >> M;
-    double** A1 = new double* [N];
-    for (int i = 0; i < N; ++i) {
-        A1[i] = new double[M];
-    }
-    inputMatrix(A1, N, M);
-    while (true) {
+    readMatrixDimensions(N, M); 
 
-        int command;
-        if (isHuman) {
-            cout << "Введите команду (0 - выход, 1 - вывод A1, 2 - A1 = A1 * A2, 3 - A1 = A1^x): ";
-        }
+    double** A1 = new double* [N];
+    for (int i = 0; i < N; i++)
+        A1[i] = new double[M];
+
+    if (isHuman) cout << "введите элементы матрицы построчно:" << endl;
+    inputMatrix(A1, N, M);
+
+    int command;
+
+    while (true) {
+        if (isHuman) cout << "Выберите команду: 0 - выход из команды; 1 - актуальное значение матрицы; 2 - умножение двух матриц; 3 - возведение квадратной матрицы в степень: " << endl;
         cin >> command;
 
         if (command == 0) {
             break;
         }
-
         else if (command == 1) {
-            if (isHuman) {
-                cout << "Матрица А1: " << endl;
-            }
-            printMatrix(A1, N, M);
+            prtMat(A1, N, M);
         }
-
         else if (command == 2) {
-            int K;
-            if (isHuman) {
-                cout << "Введите размер K для матрицы A2: ";
-            }
-            cin >> K;
-            if (isHuman) {
-                cout << "Введите элементы матрицы A2 (M строк, K чисел в каждой):" << endl;
-            }
-            double** A2 = new double* [M];
-            for (int i = 0; i < M; ++i) {
-                A2[i] = new double[K];
-            }
+            int K = readMatrixColumns(); 
 
+            double** A2 = new double* [M]; 
+            for (int i = 0; i < M; i++)
+                A2[i] = new double[K]; 
+
+            if (isHuman) cout << "введите элементы матрицы A2:" << endl;
             inputMatrix(A2, M, K);
-            double** result;
-            int result_rows, result_cols;
-            if (!multiplyMatrices(A1, N, M, A2, M, K, result, result_rows, result_cols)) {
-                cout << "NO" << endl;
-            }
-            else {
-                for (int i = 0; i < N; ++i) {
-                    delete[] A1[i];
-                }
-                delete[] A1;
 
-                N = result_rows;
-                M = result_cols;
-                A1 = result;
-            }
-            for (int i = 0; i < M; ++i) {
+            double** result = new double* [N];
+            for (int i = 0; i < N; i++)
+                result[i] = new double[K];
+
+            MulMat(A1, A2, result, N, M, K); 
+
+            for (int i = 0; i < N; i++)
+                delete[] A1[i];
+            delete[] A1;
+
+            A1 = new double* [N];
+            for (int i = 0; i < N; i++)
+                A1[i] = new double[K];
+
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < K; j++)
+                    A1[i][j] = result[i][j];
+
+            cout << "Умножение завершено. Результат сохранен в матрице A1." << endl;
+
+            for (int i = 0; i < N; i++)
+                delete[] result[i];
+            delete[] result;
+
+            for (int i = 0; i < M; i++)
                 delete[] A2[i];
-            }
             delete[] A2;
+
+            M = K; 
         }
         else if (command == 3) {
             if (N != M) {
@@ -153,28 +179,31 @@ int main(int argc, char* argv[]) {
                 continue;
             }
             int x;
-            if (isHuman) cout << "Введите натуральное число x (степень): ";
-            cin >> x;
-            double** result;
-            if (!powerMatrix(A1, N, x, result)) {
-                cout << "NO" << endl;
-            }
-            else {
-                for (int i = 0; i < N; ++i) {
-                    delete[] A1[i];
-                }
-                delete[] A1;
+            if (isHuman) cout << "степень: " << endl;
+            x = readPositiveInteger(); 
 
-                A1 = result;
-            }
+            double** result = new double* [N];
+            for (int i = 0; i < N; i++)
+                result[i] = new double[N];
+
+            powMat(A1, result, x, N);
+
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < N; j++)
+                    A1[i][j] = result[i][j];
+
+            for (int i = 0; i < N; i++)
+                delete[] result[i];
+            delete[] result;
         }
         else {
-            cout << "Такой команды не существует, повторите попытку, выбрав одну из трёх команд." << endl;
+            if (isHuman) { cout << "ошибка " << endl; }
+            else { cout << "NO" << endl; }
         }
     }
-    for (int i = 0; i < N; ++i) {
+
+    for (int i = 0; i < N; i++)
         delete[] A1[i];
-    }
     delete[] A1;
 
     return 0;
