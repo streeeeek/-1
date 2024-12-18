@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <cstring>
-#include <limits> 
+#include <limits>
 using namespace std;
 
 void MulMat(double** Mat1, double** Mat2, double** result, int N, int M, int K) {
@@ -17,12 +17,7 @@ void MulMat(double** Mat1, double** Mat2, double** result, int N, int M, int K) 
 void powMat(double** Mat, double** result, int x, int N) {
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
-            if (i == j) {
-                result[i][j] = 1.0;
-            }
-            else {
-                result[i][j] = 0.0;
-            }
+            result[i][j] = (i == j) ? 1.0 : 0.0;
         }
     }
 
@@ -66,66 +61,47 @@ int readPositiveInteger() {
     int value;
     while (true) {
         cin >> value;
-        if (cin.fail() || value <= 0) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        if (cin.fail() || value < 0) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Ошибка: введите положительное целое число." << endl;
         }
         else {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             return value;
         }
     }
 }
 
 void readMatrixDimensions(int& N, int& M) {
-    while (true) {
-        cout << "введите кол-во строк и столбцов Матрицы 1:" << endl;
-        cin >> N >> M;
-        if (cin.fail() || N <= 0 || M <= 0) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            cout << "Ошибка: введите два положительных целых числа." << endl;
-        }
-        else {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            break; 
-        }
-    }
+    cout << "введите кол-во строк и столбцов Матрицы 1:" << endl;
+    N = readPositiveInteger();
+    M = readPositiveInteger();
 }
 
 int readMatrixColumns() {
-    int columns;
-    while (true) {
-        cout << "введите кол-во столбцов матрицы A2:" << endl;
-        columns = readPositiveInteger(); 
-        return columns; 
-    }
+    cout << "введите кол-во столбцов матрицы A2:" << endl;
+    return readPositiveInteger();
 }
 
-int main(int argc, char* argv[]) {
-    bool isHuman = false;
-    if (argc <= 1 || strcmp(argv[1], "false") != 0) {
-        isHuman = true;
-    }
-
+int main() {
     setlocale(LC_ALL, "RU");
     int N, M;
 
-    readMatrixDimensions(N, M); 
+    readMatrixDimensions(N, M);
 
     double** A1 = new double* [N];
     for (int i = 0; i < N; i++)
         A1[i] = new double[M];
 
-    if (isHuman) cout << "введите элементы матрицы построчно:" << endl;
+    cout << "введите элементы матрицы построчно:" << endl;
     inputMatrix(A1, N, M);
 
     int command;
 
     while (true) {
-        if (isHuman) cout << "Выберите команду: 0 - выход из команды; 1 - актуальное значение матрицы; 2 - умножение двух матриц; 3 - возведение квадратной матрицы в степень: " << endl;
-        cin >> command;
+        cout << "Выберите команду: 0 - выход из команды; 1 - актуальное значение матрицы; 2 - умножение двух матриц; 3 - возведение квадратной матрицы в степень: " << endl;
+        command = readPositiveInteger();
 
         if (command == 0) {
             break;
@@ -134,44 +110,50 @@ int main(int argc, char* argv[]) {
             prtMat(A1, N, M);
         }
         else if (command == 2) {
-            int K = readMatrixColumns(); 
+            int K = readMatrixColumns();
 
-            double** A2 = new double* [M]; 
+            double** A2 = new double* [M];
             for (int i = 0; i < M; i++)
-                A2[i] = new double[K]; 
+                A2[i] = new double[K];
 
-            if (isHuman) cout << "введите элементы матрицы A2:" << endl;
+            cout << "введите элементы матрицы A2:" << endl;
             inputMatrix(A2, M, K);
 
             double** result = new double* [N];
             for (int i = 0; i < N; i++)
                 result[i] = new double[K];
 
-            MulMat(A1, A2, result, N, M, K); 
+            if (M != M) {
+                cout << "NO" << endl; 
+            }
+            else {
+                MulMat(A1, A2, result, N, M, K);
 
-            for (int i = 0; i < N; i++)
-                delete[] A1[i];
-            delete[] A1;
+                for (int i = 0; i < N; i++) {
+                    delete[] A1[i];
+                }
+                delete[] A1;
 
-            A1 = new double* [N];
-            for (int i = 0; i < N; i++)
-                A1[i] = new double[K];
+                A1 = new double* [N];
+                for (int i = 0; i < N; i++)
+                    A1[i] = new double[K];
 
-            for (int i = 0; i < N; i++)
-                for (int j = 0; j < K; j++)
-                    A1[i][j] = result[i][j];
+                for (int i = 0; i < N; i++)
+                    for (int j = 0; j < K; j++)
+                        A1[i][j] = result[i][j];
 
-            cout << "Умножение завершено. Результат сохранен в матрице A1." << endl;
+                cout << "Умножение завершено. Результат сохранен в матрице A1." << endl;
 
-            for (int i = 0; i < N; i++)
-                delete[] result[i];
-            delete[] result;
+                for (int i = 0; i < N; i++)
+                    delete[] result[i];
+                delete[] result;
+            }
 
             for (int i = 0; i < M; i++)
                 delete[] A2[i];
             delete[] A2;
 
-            M = K; 
+            M = K;
         }
         else if (command == 3) {
             if (N != M) {
@@ -179,8 +161,8 @@ int main(int argc, char* argv[]) {
                 continue;
             }
             int x;
-            if (isHuman) cout << "степень: " << endl;
-            x = readPositiveInteger(); 
+            cout << "степень: " << endl;
+            x = readPositiveInteger();
 
             double** result = new double* [N];
             for (int i = 0; i < N; i++)
@@ -197,8 +179,7 @@ int main(int argc, char* argv[]) {
             delete[] result;
         }
         else {
-            if (isHuman) { cout << "ошибка " << endl; }
-            else { cout << "NO" << endl; }
+            cout << "ошибка " << endl;
         }
     }
 
