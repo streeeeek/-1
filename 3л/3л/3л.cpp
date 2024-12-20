@@ -1,9 +1,9 @@
-﻿#include <iostream> //ввода и вывода данных, позволяя использовать cin и cout.
-#include <iomanip> //для управления форматированием ввода/вывода (например, для установки точности)
-#include <cmath> //для математических функций, таких как round
-#include <algorithm> //для работы с алгоритмами, такими как min, sort
-#define NOMINMAX //Предотвращает конфликт между стандартными функциями min и max и макросами Windows
-#include <Windows.h> //для работы с функциями, специфичными для Windows, например, для изменения кодировки консоли
+﻿#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <algorithm>
+#define NOMINMAX
+#include <Windows.h>
 
 using namespace std;
 
@@ -20,6 +20,9 @@ double calculateF(double x, double a, double b, double c) {
     else if (x > 0 && b == 0) {
         return (x - a) / (x - c);
     }
+    else if (c == 0) {
+        return (x >= 0) ? INFINITY : -INFINITY; // Возврат inf для деления на ноль
+    }
     else {
         return x / c;
     }
@@ -33,8 +36,8 @@ void displayTable(double arr1[], double arr2[], double x1, double x2, int size) 
     cout << "|" << setw(6) << "x" << setw(7) << "|" << setw(6) << "F" << setw(5) << "|" << endl;
     cout << string(25, '-') << endl;
 
-    for (int i = 0; i < size; ++i) {// цикл, который проходит по всем элементам массива от 0 до size - 1.
-        double x = x1 + (x2 - x1) * i / (size - 1); // Вычисление текущего значения x
+    for (int i = 0; i < size; ++i) {
+        double x = x1 + (x2 - x1) * i / (size - 1);
         cout << "| " << setw(10) << fixed << setprecision(2) << x << " | "
             << setw(8) << fixed << setprecision(2) << arr1[i] << " |" << endl;
     }
@@ -47,9 +50,9 @@ void displayTable(double arr1[], double arr2[], double x1, double x2, int size) 
     cout << string(25, '-') << endl;
 
     for (int i = 0; i < size; ++i) {
-        double x = -x2 + (x1 - (-x2)) * i / (size - 1); // Вычисление текущего значения x для второго массива
+        double x = -x2 + (x1 - (-x2)) * i / (size - 1);
         cout << "| " << setw(10) << fixed << setprecision(2) << x << " | "
-            << setw(8) << fixed << setprecision(2) << arr2[i] << " |" << endl; // Вывод значения x и F
+            << setw(8) << fixed << setprecision(2) << arr2[i] << " |" << endl;
     }
 
     cout << string(25, '-') << endl;
@@ -58,14 +61,12 @@ void displayTable(double arr1[], double arr2[], double x1, double x2, int size) 
 // Функция для округления значений массивов в зависимости от a, b, c
 void roundArrays(double arr1[], double arr2[], int size, int a_int, int b_int, int c_int) {
     if (((a_int | b_int) & (a_int | c_int)) == 0) {
-        // Если a и b равны нулю, округляем до целых
         for (int i = 0; i < size; ++i) {
             arr1[i] = round(arr1[i]);
             arr2[i] = round(arr2[i]);
         }
     }
     else {
-        // В противном случае округляем до двух знаков после запятой
         for (int i = 0; i < size; ++i) {
             arr1[i] = round(arr1[i] * 100) / 100.0;
             arr2[i] = round(arr2[i] * 100) / 100.0;
@@ -78,7 +79,6 @@ void sortArray(double arr[], int size) {
     for (int i = 1; i < size; ++i) {
         for (int r = 0; r < size - i; r++) {
             if (arr[r] > arr[r + 1]) {
-                // Обмен элементов местами
                 double temp = arr[r];
                 arr[r] = arr[r + 1];
                 arr[r + 1] = temp;
@@ -93,7 +93,6 @@ int main(int argc, char* argv[]) {
     SetConsoleCP(1251);
     setlocale(LC_ALL, "");
 
-    // Проверка, является ли программа запущенной от имени пользователя
     bool isHuman = (argc <= 1 || strcmp(argv[1], "false") != 0);
 
     if (isHuman) {
@@ -101,8 +100,14 @@ int main(int argc, char* argv[]) {
     }
 
     double x1, x2, a, b, c;
-    cin >> x1 >> x2 >> a >> b >> c; // Ввод значений x1, x2, a, b, c
-    const int size = 15; // Размер массивов
+    cin >> x1 >> x2 >> a >> b >> c; 
+
+    // Проверка на нулевое значение c
+    if (c == 0) {
+        cout << "Значение c не должно быть равно нулю." << endl;
+    }
+
+    const int size = 15; 
     double arr1[size], arr2[size];
     double step = (x2 - x1) / (size - 1); // Шаг для заполнения массивов
 
@@ -130,7 +135,6 @@ int main(int argc, char* argv[]) {
         displayTable(arr1, arr2, x1, x2, size);
     }
     else {
-        // Вывод массивов в строку, если программа не от имени пользователя
         for (int i = 0; i < size - 1; ++i) {
             cout << arr1[i] << " ";
         }
@@ -147,7 +151,7 @@ int main(int argc, char* argv[]) {
     }
     for (int i = 0; i < 14; i += 5) {
         double min_val = min({ arr1[i], arr1[i + 1], arr1[i + 2], arr1[i + 3], arr1[i + 4] });
-        cout << min_val << endl; // Вывод минимума
+        cout << min_val << endl; 
     }
 
     int index = -1; // Индекс для степеней двойки
