@@ -113,14 +113,14 @@ int main(int argc, char* argv[]) {
 
     // Заполнение первого массива значениями функции F
     for (int i = 0; i < size; ++i) {
-        double x = x1 + i * step; // Вычисление текущего значения x
-        arr1[i] = calculateF(x, a, b, c); // Вычисление значения F
+        double x = x1 + i * step; 
+        arr1[i] = calculateF(x, a, b, c); 
     }
 
     // Заполнение второго массива значениями функции F для диапазона [-x2, -x1]
     for (int i = 0; i < size; ++i) {
-        double x = -x2 + i * step; // Вычисление текущего значения x
-        arr2[i] = calculateF(x, a, b, c); // Вычисление значения F
+        double x = -x2 + i * step;
+        arr2[i] = calculateF(x, a, b, c); 
     }
 
     int a_int = static_cast<int>(a);
@@ -179,24 +179,24 @@ int main(int argc, char* argv[]) {
     }
     double sortedArr1[15];
     for (int i = 0; i < 15; ++i) {
-        sortedArr1[i] = arr1[i]; // Копируем массив для сортировки
+        sortedArr1[i] = arr1[i];
     }
     sortArray(sortedArr1, size); // Сортируем массив
     for (int i = 0; i < size - 1; ++i) {
-        cout << sortedArr1[i] << " "; // Вывод отсортированного массива
+        cout << sortedArr1[i] << " "; 
     }
     cout << sortedArr1[14] << endl;
 
     // Подсчет количества значений, встречающихся более одного раза
-    bool counted[15] = { false }; // Массив для отслеживания уже посчитанных значений
-    int count = 0; // Счетчик повторений
+    bool counted[15] = { false }; 
+    int count = 0; 
 
     for (int i = 0; i < size; ++i) {
-        if (counted[i]) continue; // Пропускаем уже посчитанные значения
-        int occ = 0; // Счетчик для текущего значения
+        if (counted[i]) continue; 
+        int occ = 0; 
         for (int j = 0; j < size; j++) {
             if (arr1[i] == arr1[j]) {
-                occ++; // Увеличиваем счетчик, если значение повторяется
+                occ++; 
             }
         }
         if (occ > 1) {
@@ -212,31 +212,29 @@ int main(int argc, char* argv[]) {
     if (isHuman) {
         cout << "Количество значений, встречающихся в массиве более одного раза:" << endl;
     }
-    cout << count << endl; // Вывод количества повторяющихся значений
+    cout << count << endl; 
 
-    // Вывод номера элемента, начиная с которого в массиве непрерывно размещаются степени числа 2
     if (isHuman) {
         cout << "Номер элемента, начиная с которого в массиве непрерывно размещаются степени числа 2 в порядке возрастания:" << endl;
     }
     cout << index << endl;
 
-    // Перераспределение положительных и отрицательных значений
     double positive[15], negative[15];
     int p = 0, o = 0;
 
     // Заполнение массива положительными значениями
     for (int i = 0; i < 15; ++i) {
         if (arr1[i] > 0) {
-            positive[p++] = arr1[i]; // Добавляем положительное значение
-            arr1[i] = 0; // Убираем его из первого массива
+            positive[p++] = arr1[i]; 
+            arr1[i] = 0; 
         }
     }
 
     // Заполнение массива отрицательными значениями
     for (int i = 0; i < 15; ++i) {
         if (arr2[i] < 0) {
-            negative[o++] = arr2[i]; // Добавляем отрицательное значение
-            arr2[i] = 0; // Убираем его из второго массива
+            negative[o++] = arr2[i]; 
+            arr2[i] = 0; 
         }
     }
 
@@ -246,13 +244,13 @@ int main(int argc, char* argv[]) {
     // Заполнение первого массива отрицательными значениями
     for (int i = 0; i < 15; ++i) {
         if (arr1[i] == 0 && o < 15) {
-            arr1[i] = negative[o++]; // Заполняем нули из первого массива отрицательными значениями
+            arr1[i] = negative[o++]; 
         }
     }
     // Заполнение второго массива положительными значениями
     for (int i = 0; i < 15; ++i) {
         if (arr2[i] == 0 && p < 15) {
-            arr2[i] = positive[p++]; // Заполняем нули из второго массива положительными значениями
+            arr2[i] = positive[p++]; 
         }
     }
 
@@ -261,14 +259,14 @@ int main(int argc, char* argv[]) {
         cout << "Перераспределенные массивы:" << endl;
     }
     for (int i = 0; i < size - 1; ++i) {
-        cout << arr1[i] << " "; // Вывод первого перераспределенного массива
+        cout << arr1[i] << " "; 
     }
     cout << arr1[14] << endl;
 
     for (int i = 0; i < size - 1; ++i) {
-        cout << arr2[i] << " "; // Вывод второго перераспределенного массива
+        cout << arr2[i] << " "; 
     }
     cout << arr2[14] << endl;
 
-    return 0; // Завершение программы
+    return 0; 
 }
